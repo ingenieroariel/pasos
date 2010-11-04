@@ -1,1 +1,41 @@
-Este proyectos es para aprender a usar GeoDjango.
+# Usar un esquema diferent a public, para facilitar la migracion de datos.
+# Pero no pudimos porque las herramientas ponen problemas, como hacemos para
+# facilitar la migracion?
+# no lo se pero por ahora usemos public.
+
+shp2pgsql -s 3116 ResguardoIndigena.shp rocio.resguardo > resguardo.sql
+
+# Agregar la siguiente linea al archivo sql resultante:
+\encoding utf-8
+
+# Editar con TextMate o con Wordpad para que quede guardado en el formato
+# correcto
+# esto arregla los errores relacionados con "secuencia invalida utf-8"
+
+psql rocio -f resguardo.sql
+
+# Virtualenv par proyectos de Python
+virtualenv rocio
+cd rocio
+
+# activamos el entorno virtual
+source bin/activate
+
+# instalamos django
+pip install django
+
+# creamos un proyecto
+django-admin.py startproject pasos
+
+# editar settings.py con la infomacion de la base de datos
+
+por ej:
+
+'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2',
+'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+   'NAME': 'rocio',                      # Or path to database file if using
+sqlite3.
+   'USER': 'ingenieroariel',                      # Not used with sqlite3.
+
+# Hacemos manage.py ejecutable
+chmod +x manage.py
