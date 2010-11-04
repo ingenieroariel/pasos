@@ -6,5 +6,5 @@ class ResguardoAdmin(admin.GeoModelAdmin):
     list_filter = ['etnia',]
     search_fields = ['nombre', 'etnia', 'resolucion']
 
-admin.site.register(AreaProtegida)
+admin.site.register(AreaProtegida, admin.GeoModelAdmin)
 admin.site.register(Resguardo,ResguardoAdmin)
